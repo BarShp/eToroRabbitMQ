@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using BasicRabbitMQ;
+using Common;
 using Microsoft.Extensions.Configuration;
 
 namespace StocksPublisher
@@ -19,8 +20,17 @@ namespace StocksPublisher
             {
                 for (int i = 0; i < 5; i++)
                 {
-                    bp.PublishMessage("Hello GOOG!", "GOOG");
-                    bp.PublishMessage("Hello AAPL!", "AAPL");
+                    StockInfo stock = new StockInfo()
+                    {
+                        BuyRate = 4.1,
+                        SellRate = 3.2,
+                        Time = DateTime.Now
+                    };
+
+                    stock.ID = "GOOG";
+                    bp.Publish(stock, stock.ID);
+                    stock.ID = "AAPL";
+                    bp.Publish(stock, stock.ID);
                 }
             }
         }
