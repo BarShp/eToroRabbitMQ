@@ -16,7 +16,7 @@ namespace StocksPublisher
 
             IConfigurationRoot configuration = builder.Build();
 
-            using (var bp = new BasicTopicProducer(configuration["RabbitMQUrl"], configuration["ExchangeName"]))
+            using (var producer = new BasicTopicProducer(configuration["RabbitMQUrl"], configuration["ExchangeName"]))
             {
                 for (int i = 0; i < 5; i++)
                 {
@@ -28,9 +28,9 @@ namespace StocksPublisher
                     };
 
                     stock.ID = "GOOG";
-                    bp.Publish(stock, stock.ID);
+                    producer.Publish(stock, stock.ID);
                     stock.ID = "AAPL";
-                    bp.Publish(stock, stock.ID);
+                    producer.Publish(stock, stock.ID);
                 }
             }
         }
