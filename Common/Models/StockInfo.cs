@@ -6,7 +6,7 @@ namespace Common
     {
         public string ID { get; set; }
         public double BuyRate { get; set; }
-        public string SellRate { get; set; }
+        public double SellRate { get; set; }
         public DateTime Time { get; set; }
     }
 }
