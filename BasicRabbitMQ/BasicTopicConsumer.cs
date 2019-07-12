@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
@@ -25,14 +26,15 @@ namespace BasicRabbitMQ
             channel.QueueBind(queueName, exchangeName, bindingKey);
         }
 
-        public void Consume(EventHandler<string> onReceived)
+        public void Consume<T>(EventHandler<T> onReceived)
         {
             var consumer = new EventingBasicConsumer(channel);
             consumer.Received += (model, ea) =>
             {
                 var body = ea.Body;
-                var message = Encoding.UTF8.GetString(body);
-                onReceived(this, message);
+                var jsonBody = Encoding.UTF8.GetString(body);
+                T deserializedObject = JsonConvert.DeserializeObject<T>(jsonBody);
+                onReceived(this, deserializedObject);
             };
             channel.BasicConsume(queue: queueName,
                                  autoAck: true,

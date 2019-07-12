@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using Newtonsoft.Json;
 using RabbitMQ.Client;
 
 namespace BasicRabbitMQ
@@ -22,13 +23,13 @@ namespace BasicRabbitMQ
             channel.ExchangeDeclare(exchangeName, "topic", autoDelete: false);
         }
 
-        public void PublishMessage(string message, string routingKey)
+        public void Publish(Object body, string routingKey)
         {
-            var body = Encoding.UTF8.GetBytes(message);
+            var jsonBody = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(body));
 
             channel.BasicPublish(exchange: exchangeName,
                                  routingKey: routingKey,
-                                 body: body);
+                                 body: jsonBody);
         }
 
         public void Dispose()
