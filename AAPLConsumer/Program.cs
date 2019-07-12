@@ -1,9 +1,11 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using Microsoft.Extensions.Configuration;
 using BasicRabbitMQ;
+using Common;
 
-namespace AAPLConsumer
+namespace GOOGConsumer
 {
     class Program
     {
@@ -22,9 +24,9 @@ namespace AAPLConsumer
                     configuration["ExchangeName"],
                     configuration["BindingKey"]))
             {
-                consumer.Consume((c, msg) =>
+                consumer.Consume<StockInfo>((c, stock) =>
                 {
-                    Console.WriteLine(msg);
+                    Console.WriteLine($"StockId: {stock.ID}, BuyRate: {stock.BuyRate}, SellRate: {stock.SellRate}, Time: {stock.Time}");
                 });
 
                 Console.WriteLine("Press [enter] to exit.");

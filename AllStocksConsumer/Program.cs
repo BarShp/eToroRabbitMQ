@@ -3,8 +3,9 @@ using System.IO;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using BasicRabbitMQ;
+using Common;
 
-namespace AllStocksConsumer
+namespace GOOGConsumer
 {
     class Program
     {
@@ -23,9 +24,9 @@ namespace AllStocksConsumer
                     configuration["ExchangeName"],
                     configuration["BindingKey"]))
             {
-                consumer.Consume((c, msg) =>
+                consumer.Consume<StockInfo>((c, stock) =>
                 {
-                    Console.WriteLine(msg);
+                    Console.WriteLine($"StockId: {stock.ID}, BuyRate: {stock.BuyRate}, SellRate: {stock.SellRate}, Time: {stock.Time}");
                 });
 
                 Console.WriteLine("Press [enter] to exit.");
