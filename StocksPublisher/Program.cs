@@ -15,7 +15,7 @@ namespace StocksPublisher
 
             IConfigurationRoot configuration = builder.Build();
 
-            using (var bp = new BasicTopicProducer(configuration["RabbitMQUrl"], "MyExchange"))
+            using (var bp = new BasicTopicProducer(configuration["RabbitMQUrl"], configuration["ExchangeName"]))
             {
                 for (int i = 0; i < 5; i++)
                 {
