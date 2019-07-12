@@ -19,8 +19,8 @@ namespace StocksPublisher
             {
                 for (int i = 0; i < 5; i++)
                 {
-                    bp.PublishMessage("Hello World!", "badRoutingKey");
-                    bp.PublishMessage("Hello World!", "goodRoutingKey");
+                    bp.PublishMessage("Hello GOOG!", "GOOG");
+                    bp.PublishMessage("Hello AAPL!", "AAPL");
                 }
             }
         }
